@@ -1,0 +1,568 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио</title>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .buttons {
+            margin: 1%;
+            text-align: center;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #1e1e1e;
+            color: #ccc;
+        }
+
+        .btn-hover {
+            width: 200px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            margin: 20px;
+            height: 55px;
+            text-align:center;
+            border: none;
+            background-size: 300% 100%;
+        
+            border-radius: 50px;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+        
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+        
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-2 {
+            background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+            box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+        }
+        .btn-hover.color-4 {
+            background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+            box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+
+
+        
+        header {
+            background: #333;
+            color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo img {
+            width: 100px; /* Настройте размер логотипа по вашему усмотрению */
+            height: auto;
+        }
+        
+        .menu-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            display: none; /* Скрываем кнопку на больших экранах */
+        }
+        
+        .menu-toggle .hamburger {
+            display: block;
+            width: 20px;
+            height: 3px;
+            background-color: white;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+        
+        .menu-toggle .hamburger:before,
+        .menu-toggle .hamburger:after {
+            content: '';
+            width: 20px;
+            height: 3px;
+            background-color: white;
+            position: absolute;
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-toggle .hamburger:before {
+            top: -8px;
+        }
+        
+        .menu-toggle .hamburger:after {
+            top: 8px;
+        }
+        
+        .menu-toggle.open .hamburger {
+            background-color: transparent;
+        }
+        
+        .menu-toggle.open .hamburger:before {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .menu-toggle.open .hamburger:after {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 0;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #ffa500;
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        
+            .menu-toggle {
+                display: block; /* Показываем кнопку на маленьких экранах */
+            }
+        
+            nav {
+                display: none; /* Скрываем навигацию на маленьких экранах */
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                top: 60px; /* Высота шапки */
+                left: 0;
+                background-color: #333;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                z-index: 999;
+                transition: all 0.3s ease;
+            }
+        
+            nav.open {
+                display: flex;
+            }
+        
+            nav a {
+                margin: 0;
+                padding: 15px 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+        
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #333;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .profile-text {
+            color: #ccc;
+        }
+
+        section {
+            width: 100%;
+            margin: 40px 0;
+            padding: 20px;
+            background: #2e2e2e;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffa500;
+        }
+
+        p {
+            text-align: center;
+            color: #ccc;
+        }
+
+        .skills-container {
+            display: flex;
+            overflow-x: auto; /* Позволяет прокручивать карточки горизонтально */
+            gap: 20px; /* Расстояние между карточками */
+            padding: 10px;
+            width: 100%;
+            position: relative;
+            scroll-snap-type: x mandatory; /* Прокручивать по горизонтали */
+        }
+
+        .round-image {
+            border-radius: 50%; /* делает изображение круглым */
+            width: 100px; /* установите ширину по вашему усмотрению */
+            height: 100px; /* установите высоту по вашему усмотрению */
+        }
+        
+        .skill-card {
+            min-width: 150px; /* Минимальная ширина карточки */
+            width: 200px; /* Ширина карточки */
+            height: 250px; /* Высота карточки */
+            background: #3a3a3a;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            scroll-snap-align: center; /* Выравнивание карточек по центру */
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        .skill-logo-container {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* чтобы изображение не выходило за пределы круга */
+        }
+        
+        .skill-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* чтобы изображение вписывалось в круглую область */
+        }
+        
+        
+        
+        
+        
+
+        .projects {
+            display: none; /* Safari и Chrome */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+            display: flex;
+            overflow-x: auto; /* Позволяет прокручивать карточки горизонтально */
+            gap: 20px; /* Расстояние между карточками */
+            padding: 10px;
+            width: 100%;
+            position: relative;
+            scroll-snap-type: x mandatory; /* Прокручивать по горизонтали */
+        }
+        
+        .project-card {
+            min-width: 250px; /* Минимальная ширина карточки */
+            width: 300px; /* Ширина карточки */
+            height: 400px; /* Высота карточки */
+            background: #3a3a3a;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            scroll-snap-align: center; /* Выравнивание карточек по центру */
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px; /* Высота изображения в карточке */
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .project-links a {
+            color: #ffa500;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .project-links a:hover {
+            text-decoration: underline;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .navigation-buttons button {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .navigation-buttons button:hover {
+            background: #444;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <nav>
+                <a href="#about">О себе</a>
+                <a href="#skills">Языки программирования</a>
+                <a href="#projects">Мои проекты</a>
+                <a href="#words">Слова для работодателя</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="content">
+        {% for about_me in about_me_list %}
+        <div class="profile">
+            {% if about_me.avatar %}
+                <img src="{{ about_me.avatar.url }}" alt="Аватарка" class="avatar">
+            {% else %}
+                <img src="{% static 'img/default_avatar.png' %}" alt="Аватарка" class="avatar">
+            {% endif %}
+            <div class="profile-text">
+                <h2>{{ about_me.name }}</h2>
+                <p>Уровень программирования: {{ about_me.programming_level }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="buttons-container">
+            <button class="btn-hover color-2" onclick="window.location.href='mailto:bloggob948@gmail.com?subject=Тема письма&body=Текст письма'">Связаться со мной</button>
+            <button class="btn-hover color-4" onclick="window.location.href='https://discord.com/channels/@me'">Discord</button>
+        </div>
+    </div>
+
+        <section id="about">
+            <h2>О себе</h2>
+            {% for about_me in about_me_list %}
+                {% if about_me.story %}
+                    <p>{{ about_me.story }}</p>
+                {% endif %}
+            {% endfor %}
+        </section>
+
+    <section id="skills">
+        <h2>На каких языках я умею программировать</h2>
+        <div class="skills-container">
+            {% for language in programming_languages %}
+                <div class="skill-card">
+                    <div class="skill-logo-container">
+                        <img src="{{ language.logo.url }}" alt="Логотип {{ language.name }}" class="skill-logo round-image">
+                    </div>
+                    <div class="skill-info">
+                        <h3>{{ language.name }}</h3>
+                        <p>Опыт работы: {{ language.experience_years }} лет</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+        
+
+        <section id="projects">
+            <h2>Мои проекты</h2>
+            <div class="projects">
+                {% for project in projects %}
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        </div>
+                        <div class="project-links">
+                            <a href="{{ project.site_link }}" target="_blank">Сайт проекта</a>
+                            <a href="{{ project.file_link }}" target="_blank">Файл проекта</a>
+                        </div>
+                        <p>{{ project.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="navigation-buttons">
+                <button id="scroll-left">&larr; Влево</button>
+                <button id="scroll-right">Вправо &rarr;</button>
+            </div>
+        </section>
+
+        <section id="words">
+            <h2>Слова для работодателя</h2>
+            {% for words in words_for_employer %}
+                <p>{{ words.content }}</p>
+            {% endfor %}
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('section');
+
+            const options = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Обработчики для кнопок прокрутки и клавиатуры
+            const projectsContainer = document.getElementById('projects-container');
+            const scrollLeftBtn = document.getElementById('scroll-left');
+            const scrollRightBtn = document.getElementById('scroll-right');
+            let currentProjectIndex = 0;
+
+            const scrollToProject = (index) => {
+                const projects = document.querySelectorAll('.project-card');
+                if (index >= 0 && index < projects.length) {
+                    projects[index].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+                    currentProjectIndex = index;
+                }
+            };
+
+            scrollLeftBtn.addEventListener('click', () => {
+                scrollToProject(currentProjectIndex - 1);
+            });
+
+            scrollRightBtn.addEventListener('click', () => {
+                scrollToProject(currentProjectIndex + 1);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'ArrowLeft') {
+                    scrollToProject(currentProjectIndex - 1);
+                }
+                if (event.key === 'ArrowRight') {
+                    scrollToProject(currentProjectIndex + 1);
+                }
+            });
+        });
+            
+    </script>
+</body>
+</html>
+
+
