@@ -6,16 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Портфолио</title>
     <style>
+
         * {
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
         }
 
-        .buttons {
-            margin: 1%;
-            text-align: center;
-        }
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -24,20 +21,24 @@
             color: #ccc;
         }
 
+        .buttons {
+            margin: 0,5%;
+            text-align: center;
+        }
         .btn-hover {
             width: 200px;
             font-size: 16px;
             font-weight: 600;
             color: #fff;
             cursor: pointer;
-            margin: 20px;
+            margin: 10px;
             height: 55px;
             text-align:center;
             border: none;
             background-size: 300% 100%;
         
             border-radius: 50px;
-            moz-transition: all .4s ease-in-out;
+            /* moz-transition: all .4s ease-in-out; */
             -o-transition: all .4s ease-in-out;
             -webkit-transition: all .4s ease-in-out;
             transition: all .4s ease-in-out;
@@ -45,7 +46,7 @@
         
         .btn-hover:hover {
             background-position: 100% 0;
-            moz-transition: all .4s ease-in-out;
+            /* moz-transition: all .4s ease-in-out; */
             -o-transition: all .4s ease-in-out;
             -webkit-transition: all .4s ease-in-out;
             transition: all .4s ease-in-out;
@@ -78,8 +79,6 @@
         }
 
 
-
-        
         header {
             background: #333;
             color: white;
@@ -237,7 +236,8 @@
 
         section {
             width: 100%;
-            margin: 40px 0;
+            max-width: 800px; /* Ограничиваем ширину секции */
+            margin: 40px auto; /* Центрируем секцию */
             padding: 20px;
             background: #2e2e2e;
             border-radius: 10px;
@@ -256,6 +256,9 @@
             text-align: center;
             color: #ffa500;
         }
+        h3 {
+            text-align:center;
+        }
 
         p {
             text-align: center;
@@ -264,12 +267,14 @@
 
         .skills-container {
             display: flex;
-            overflow-x: auto; /* Позволяет прокручивать карточки горизонтально */
-            gap: 20px; /* Расстояние между карточками */
+            overflow-x: auto;
+            gap: 20px;
             padding: 10px;
             width: 100%;
+            max-width: 800px; /* Ограничиваем ширину контейнера с навыками */
+            margin: 0 auto; /* Центрируем контейнер */
             position: relative;
-            scroll-snap-type: x mandatory; /* Прокручивать по горизонтали */
+            scroll-snap-type: x mandatory;
         }
 
         .round-image {
@@ -325,16 +330,15 @@
         
 
         .projects {
-            display: none; /* Safari и Chrome */
-            -ms-overflow-style: none;  /* Internet Explorer 10+ */
-            scrollbar-width: none;  /* Firefox */
             display: flex;
-            overflow-x: auto; /* Позволяет прокручивать карточки горизонтально */
-            gap: 20px; /* Расстояние между карточками */
+            overflow-x: auto;
+            gap: 20px;
             padding: 10px;
             width: 100%;
+            max-width: 800px; /* Ограничиваем ширину контейнера с проектами */
+            margin: 0 auto; /* Центрируем контейнер */
             position: relative;
-            scroll-snap-type: x mandatory; /* Прокручивать по горизонтали */
+            scroll-snap-type: x mandatory;
         }
         
         .project-card {
@@ -411,7 +415,7 @@
     </style>
 </head>
 <body>
-    <header>
+      <header>
         <div class="header-container">
             <nav>
                 <a href="#about">О себе</a>
@@ -441,15 +445,15 @@
             <button class="btn-hover color-4" onclick="window.location.href='https://discord.com/channels/@me'">Discord</button>
         </div>
     </div>
-
-        <section id="about">
-            <h2>О себе</h2>
-            {% for about_me in about_me_list %}
-                {% if about_me.story %}
-                    <p>{{ about_me.story }}</p>
-                {% endif %}
-            {% endfor %}
-        </section>
+    
+    <section id="about">
+        <h2>О себе</h2>
+        {% for about_me in about_me_list %}
+            {% if about_me.story %}
+                <p>{{ about_me.story }}</p>
+            {% endif %}
+        {% endfor %}
+    </section>
 
     <section id="skills">
         <h2>На каких языках я умею программировать</h2>
@@ -467,36 +471,35 @@
             {% endfor %}
         </div>
     </section>
-        
-
-        <section id="projects">
-            <h2>Мои проекты</h2>
-            <div class="projects">
-                {% for project in projects %}
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="{{ project.image.url }}" alt="{{ project.title }}">
-                        </div>
-                        <div class="project-links">
-                            <a href="{{ project.site_link }}" target="_blank">Сайт проекта</a>
-                            <a href="{{ project.file_link }}" target="_blank">Файл проекта</a>
-                        </div>
-                        <p>{{ project.description }}</p>
+    
+    <section id="projects">
+        <h2>Мои проекты</h2>
+        <div class="projects">
+            {% for project in projects %}
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
                     </div>
-                {% endfor %}
-            </div>
-            <div class="navigation-buttons">
-                <button id="scroll-left">&larr; Влево</button>
-                <button id="scroll-right">Вправо &rarr;</button>
-            </div>
-        </section>
-
-        <section id="words">
-            <h2>Слова для работодателя</h2>
-            {% for words in words_for_employer %}
-                <p>{{ words.content }}</p>
+                    <div class="project-links">
+                        <a href="{{ project.site_link }}" target="_blank">Сайт проекта</a>
+                        <a href="{{ project.file_link }}" target="_blank">Файл проекта</a>
+                    </div>
+                    <p>{{ project.description }}</p>
+                </div>
             {% endfor %}
-        </section>
+        </div>
+        <div class="navigation-buttons">
+            <button id="scroll-left">&larr; Влево</button>
+            <button id="scroll-right">Вправо &rarr;</button>
+        </div>
+    </section>
+
+    <section id="words">
+        <h2>Слова для работодателя</h2>
+        {% for words in words_for_employer %}
+            <p>{{ words.content }}</p>
+        {% endfor %}
+    </section>
     </div>
 
     <script>
@@ -560,7 +563,6 @@
                 }
             });
         });
-            
     </script>
 </body>
 </html>
