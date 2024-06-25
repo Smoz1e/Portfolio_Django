@@ -9,7 +9,14 @@ class AboutMe(models.Model):
     def __str__(self):
         return self.name
 
+class Certificate(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='certificates/')
+    description = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.title
+    
 class ProgrammingLanguage(models.Model):
     name = models.CharField(max_length=100)
     experience_years = models.IntegerField()

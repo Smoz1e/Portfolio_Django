@@ -7,12 +7,13 @@ def index(request):
     programming_languages = ProgrammingLanguage.objects.all()
     projects = Project.objects.all()
     words_for_employer = WordsForEmployer.objects.all()
-
+    certificates = Certificate.objects.all()
+    
     # Передаем данные в шаблон index.html
     return render(request, 'index.html', {
         'about_me_list': about_me_list,
         'programming_languages': programming_languages,
         'projects': projects,
         'words_for_employer': words_for_employer,
+        'certificates': certificates,
     })
-
